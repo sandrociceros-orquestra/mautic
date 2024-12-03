@@ -4332,23 +4332,6 @@ fieldset[disabled] .btn-ghost.btn-icon.focus i {
   line-height: 1em;
   padding: 2px;
 }
-.btn-group > .btn.btn-yes:first-child:not(:last-child):not(.dropdown-toggle),
-.btn-group > .btn.btn-no:first-child:not(:last-child):not(.dropdown-toggle),
-.btn-group > .btn.btn-yes:not(:first-child):not(:last-child):not(.dropdown-toggle),
-.btn-group > .btn.btn-no:not(:first-child):not(:last-child):not(.dropdown-toggle),
-.btn-group > .btn.btn-yes:last-child:not(:first-child),
-.btn-group > .btn.btn-no:last-child:not(:first-child),
-.btn-group > .btn.btn-yes,
-.btn-group > .btn.btn-no {
-  padding: 5px;
-  aspect-ratio: 1/1;
-  align-items: center;
-  justify-content: center;
-}
-.btn-group > .btn.active.btn-yes,
-.btn-group > .btn.active.btn-no {
-  outline-color: transparent;
-}
 .btn-xs,
 .btn[size="xs"] {
   height: var(--spacing-06);
@@ -4844,6 +4827,10 @@ fieldset[disabled] .btn-ghost.btn-icon.focus i {
 .ck-body-wrapper {
   position: fixed;
   z-index: 99999;
+}
+.ck.ck-content.ck-editor__editable a {
+  text-decoration: underline;
+  color: var(--link-primary);
 }
 a.media {
   display: block;
@@ -7357,6 +7344,30 @@ ul.line-legend li {
 .table > thead > tr > th {
   vertical-align: middle;
   border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--layer-accent);
+}
+.table-sort {
+  height: 48px;
+  border-radius: unset;
+  border-color: transparent;
+}
+.table-sort,
+.table-sort:hover,
+.table-sort i {
+  color: var(--text-primary);
+}
+.table-sort .table-sort__icon-unsorted {
+  visibility: hidden;
+}
+.table-sort:hover {
+  background-color: var(--layer-selected-hover);
+  border-color: transparent;
+}
+.table-sort:hover .table-sort__icon-unsorted {
+  visibility: visible;
+}
+.table-sort:hover i {
+  color: var(--text-primary);
 }
 .table-responsive-force {
   width: 100%;
@@ -10655,22 +10666,24 @@ code:hover > .copy-icon {
 .list-toolbar .input-group .twitter-typeahead:last-child .tt-hint,
 .list-toolbar .form-control.search,
 .list-toolbar .input-group .input-group-btn button,
-.list-toolbar .btn {
+.list-toolbar .btn,
+.list-toolbar div {
   height: 48px;
   border-radius: unset;
+  margin: 0;
 }
 .list-toolbar .input-group .twitter-typeahead:last-child .tt-input:hover,
 .list-toolbar .input-group .twitter-typeahead:last-child .tt-hint:hover,
 .list-toolbar .form-control.search:hover,
 .list-toolbar .input-group .input-group-btn button:hover,
-.list-toolbar .btn:hover {
+.list-toolbar .btn-ghost:hover {
   background-color: var(--field-hover);
 }
-.list-toolbar .btn:last-child,
-.list-toolbar .btn:only-of-type + .input-group > input {
+.list-toolbar > .btn:last-child,
+.list-toolbar > .btn:only-of-type + .input-group > input {
   border-radius: 0 var(--border-radius-lg) 0 0;
 }
-.list-toolbar .btn:first-child {
+.list-toolbar > .btn:first-child {
   border-radius: var(--border-radius-lg) 0 0 0;
 }
 .well {

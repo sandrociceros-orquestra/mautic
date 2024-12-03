@@ -33,8 +33,8 @@ class ContactPage
     public static $delete     = '#toolbar > div.std-toolbar.open > ul > li:nth-child(5) > a';
 
     // Contact Page
-    public static $quickAddButton     = '#toolbar .quickadd';
-    public static $newContactButton   = '#toolbar a:nth-child(2)';
+    public static $quickAddButton     = '.quickadd';
+    public static $newContactButton   = '#new';
 
     // Import
     public static $chooseFileButton       = '#lead_import_file';
@@ -75,7 +75,7 @@ class ContactPage
 
     // Do Not Contact
     public static $firstContactDoNotContact  = '#leadTable > tbody > tr:nth-child(1) > td:nth-child(2) > a > div.pull-right > span';
-    public static $secondContactDoNotContact = '#leadTable > tbody > tr:nth-child(1) > td:nth-child(2) > a > div.pull-right > span';
+    public static $secondContactDoNotContact = '#leadTable > tbody > tr:nth-child(2) > td:nth-child(2) > a > div.pull-right > span';
     public static $doNotContactSaveButton    = '//*[@id="MauticSharedModal"]/div/div/div[3]/div/button[1]';
 
     /**
