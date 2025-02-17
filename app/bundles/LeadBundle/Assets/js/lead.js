@@ -23,7 +23,7 @@ Mautic.leadOnLoad = function (container, response) {
             mQuery('#card-view').click();
         }
     }, 'contact pages');
-    
+
     //Prevent single combo keys from initiating within lead note
     Mousetrap.stopCallback = function(e, element, combo) {
         if (element.id == 'leadnote_text' && combo != 'mod+enter') {
@@ -277,7 +277,7 @@ Mautic.getLeadId = function() {
 }
 
 Mautic.leadlistOnLoad = function(container, response) {
-    const segmentCountElem = mQuery('a.col-count');
+    const segmentCountElem = mQuery('span.col-count');
 
     if (segmentCountElem.length) {
         segmentCountElem.each(function() {
@@ -288,7 +288,8 @@ Mautic.leadlistOnLoad = function(container, response) {
                 'lead:getLeadCount',
                 {id: id},
                 function (response) {
-                    elem.html(response.html);
+                    elem.className = response.className;
+                    elem.children('a').html(response.html);
                 },
                 false,
                 true,
@@ -731,6 +732,8 @@ Mautic.segmentFilter = function() {
                     {'opacity': 0},
                     'fast',
                     function () {
+                        // Remove existing tooltip
+                        mQuery('*[role="tooltip"]').tooltip('destroy');
                         mQuery(this).remove();
                         Mautic.reorderSegmentFilters();
                     }
@@ -976,6 +979,20 @@ Mautic.updateLeadFieldBooleanLabels = function(el, label) {
     );
 };
 
+Mautic.updateLeadFieldOrderChoiceList = function () {
+    formData = {
+        'object': mQuery('#leadfield_object').val(),
+        'group': mQuery('#leadfield_group').val()
+    };
+    Mautic.ajaxActionRequest('lead:updateLeadFieldOrderChoiceList', formData, function(response) {
+        if (response) {
+            mQuery('#leadfield_order_container').html(response);
+            Mautic.activateChosenSelect('#leadfield_order');
+            mQuery('label[for=leadfield_order]').tooltip({html: true});
+        }
+    });
+}
+
 Mautic.refreshLeadSocialProfile = function(network, leadId, event) {
     var query = "action=lead:updateSocialProfile&network=" + network + "&lead=" + leadId;
     mQuery.ajax({
@@ -1093,14 +1110,14 @@ Mautic.setPreferredChannel = function(channel) {
     mQuery( '#frequency_' + channel ).slideToggle();
     mQuery( '#frequency_' + channel ).removeClass('hide');
     if (mQuery('#' + channel)[0].checked) {
-        mQuery('#is-contactable-' + channel).removeClass('text-muted');
+        mQuery('#is-contactable-' + channel).removeClass('text-secondary');
         mQuery('#lead_contact_frequency_rules_frequency_number_' + channel).prop("disabled" , false).trigger("chosen:updated");
         mQuery('#preferred_' + channel).prop("disabled" , false);
         mQuery('#lead_contact_frequency_rules_frequency_time_' + channel).prop("disabled" , false).trigger("chosen:updated");
         mQuery('#lead_contact_frequency_rules_contact_pause_start_date_' + channel).prop("disabled" , false);
         mQuery('#lead_contact_frequency_rules_contact_pause_end_date_' + channel).prop("disabled" , false);
     } else {
-        mQuery('#is-contactable-' + channel).addClass('text-muted');
+        mQuery('#is-contactable-' + channel).addClass('text-secondary');
         mQuery('#lead_contact_frequency_rules_frequency_number_' + channel).prop("disabled" , true).trigger("chosen:updated");
         mQuery('#preferred_' + channel).prop("disabled" , true);
         mQuery('#lead_contact_frequency_rules_frequency_time_' + channel).prop("disabled" , true).trigger("chosen:updated");
@@ -1269,10 +1286,10 @@ Mautic.removeTagFromLead = function (el, leadId, tagId) {
 Mautic.toggleLiveLeadListUpdate = function () {
     if (typeof MauticVars.moderatedIntervals['leadListLiveUpdate'] == 'undefined') {
         Mautic.setModeratedInterval('leadListLiveUpdate', 'updateLeadList', 5000);
-        mQuery('#liveModeButton').addClass('btn-primary');
+        mQuery('#liveModeButton').addClass('active');
     } else {
         Mautic.clearModeratedInterval('leadListLiveUpdate');
-        mQuery('#liveModeButton').removeClass('btn-primary');
+        mQuery('#liveModeButton').removeClass('active');
     }
 };
 
